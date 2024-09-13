@@ -24,36 +24,57 @@ class Recinto{
                 
 
             case "CROCODILO":
-                
                 espacoOcupado = 3 * quantidade;
                 return espacoOcupado;
                 
 
             case "MACACO":
-                let soma = 0; 
+                let somaMacaco = 0; 
                 if(recinto.animaisExistentes.length > 0){
                     
                     for(let i = 0; i<=recinto.animaisExistentes.length-1; i++){
-                        if(recinto.animaisExistentes[i].especie !== "MACACO" && recinto.animaisExistentes[i].alimentacao !== "carnivoro"){
-                            soma+=1;
+                        if(recinto.animaisExistentes[i].especie !== "MACACO"){
+                            somaMacaco+=1;
                         }
-                        soma+=recinto.animaisExistentes[i].tamanho;  
+                        somaMacaco+=recinto.animaisExistentes[i].tamanho;  
                          
                     }
                 }
-                espacoOcupado = (1 * quantidade) + soma;
+                espacoOcupado = (1 * quantidade) + somaMacaco;
                 return espacoOcupado; 
                  
             
             case "GAZELA":
-                espacoOcupado = 2 * quantidade; 
+                let somaGazela = 0; 
+                if(recinto.animaisExistentes.length > 0){
+                    
+                    for(let i = 0; i<=recinto.animaisExistentes.length-1; i++){
+                        if(recinto.animaisExistentes[i].especie !== "GAZELA"){
+                            somaGazela+=1;
+                        }
+                        somaGazela+=recinto.animaisExistentes[i].tamanho;  
+                         
+                    }
+                }
+                espacoOcupado = (2 * quantidade) + somaGazela;
                 return espacoOcupado; 
                  
 
             case "HIPOPOTAMO":
-                espacoOcupado = 4 * quantidade; 
+                let somaHipopotamo = 0; 
+                if(recinto.animaisExistentes.length > 0){
+                    
+                    for(let i = 0; i<=recinto.animaisExistentes.length-1; i++){
+                        if(recinto.animaisExistentes[i].especie !== "HIPOPOTAMO"){
+                            somaHipopotamo+=1;
+                        }
+                        somaHipopotamo+=recinto.animaisExistentes[i].tamanho;  
+                         
+                    }
+                }
+                espacoOcupado = (2 * quantidade) + somaHipopotamo;
                 return espacoOcupado; 
-                break; 
+                 
         }  
     }
 }
@@ -65,7 +86,6 @@ class Animal{
         this.tamanho = tamanho;
         this.bioma = bioma;
         this.alimentacao = alimentacao;
-
     }
 }
 
@@ -76,7 +96,7 @@ const animais = [
     new Animal("CROCODILO", 3, ["rio"], "carnivoro"),
     new Animal("MACACO", 1, ["savana", "floresta", "savana e rio"]), "onivoro",
     new Animal("GAZELA", 2, ["savana", "savana e rio"], "herbivoro"),
-new Animal("HIPOPOTAMO", 4, ["savana e rio"], "onivoro")
+    new Animal("HIPOPOTAMO", 4, ["savana e rio"], "onivoro")
 ];
 
 /* lista de instâncias da classe Recinto, com cada recinto contendo informações como bioma e a lista de animais existentes. */
@@ -99,8 +119,6 @@ var recintos= [
         new Animal("LEAO",3,["savana"], "carnivoro"),
     ])
 ]
-
-
 
 class RecintosZoo {
 
@@ -134,45 +152,116 @@ class RecintosZoo {
                         let espacoOcupado = 0;
 
                         if(espacoOcupado < recintosExistentes[i].tamanhoTotal){
+                            switch(animal){
+                                case "LEAO":
+                                    espacoOcupado = recintosExistentes[i].occupiedSpace("LEAO",quantidade,recintosExistentes[i])
+                                    let leao = new Animal("LEAO",3,["savana"], "carnivoro");
 
-
-                            if(animal == "CROCODILO"){
-                                espacoOcupado = recintosExistentes[i].occupiedSpace("CROCODILO",quantidade,recintosExistentes[i])
-                                let crocodilo = new Animal("CROCODILO", 3, ["rio"], "carnivoro");
-
-                                if(crocodilo.bioma == recintosExistentes[i].bioma){
+                                    if(leao.bioma == recintosExistentes[i].bioma){
                                     let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
                                     recintosViaveis.push(`Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`)
                                     
                                 }
-                            }
-                            else if(animal == "MACACO"){
-                                let isRecintoViavel = true; 
-                                if(espacoOcupado === null){
-                                    continue; 
+                                break; 
+
+                                case "LEOPARDO":
+                                    espacoOcupado = recintosExistentes[i].occupiedSpace("LEOPARDO",quantidade,recintosExistentes[i])
+                                    let leopardo = new Animal("LEOPARDO",2,["savana"], "carnivoro");
+
+                                    if(leopardo.bioma == recintosExistentes[i].bioma){
+                                    let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
+                                    recintosViaveis.push(`Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`)
+                                    
                                 }
+                                break;
+
+                                case "CROCODILO":
+                                    espacoOcupado = recintosExistentes[i].occupiedSpace("CROCODILO",quantidade,recintosExistentes[i])
+                                    let crocodilo = new Animal("CROCODILO", 3, ["rio"], "carnivoro");
+
+                                    if(crocodilo.bioma == recintosExistentes[i].bioma){
+                                    let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
+                                    recintosViaveis.push(`Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`)
+                                    
+                                }
+                                break; 
+
+                    
+                                case "MACACO":
+                                    let isRecintoViavelMacaco = true; 
+                                    if(espacoOcupado === null){
+                                    continue; 
+                                    }
                                 espacoOcupado = recintosExistentes[i].occupiedSpace("MACACO",quantidade,recintosExistentes[i]);
                                 let macaco = new Animal("MACACO",1,["savana","floresta", "savana e rio"], "onivoro");
 
                                 if(macaco.bioma.includes(recintosExistentes[i].bioma  )){
                                     for(let j =0; j<=recintosExistentes[i].animaisExistentes.length -1; j++){
                                         if(recintosExistentes[i].animaisExistentes[j].alimentacao === "carnivoro"){
-                                            isRecintoViavel = false; 
+                                            isRecintoViavelMacaco = false; 
                                             break; 
                                         }
                                     }
-                                    if(isRecintoViavel){
+                                    if(isRecintoViavelMacaco){
                                         let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
                                     let recintoFormatado = `Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`
 
                                     recintosViaveis.push(recintoFormatado);
 
-                                    }
-
-                                         
+                                    }   
                                 }
-                                
-                                
+
+                                break; 
+
+                                case "GAZELA":
+                                    let isRecintoViavelGazela = true; 
+                                    if(espacoOcupado === null){
+                                    continue; 
+                                    }
+                                espacoOcupado = recintosExistentes[i].occupiedSpace("MACACO",quantidade,recintosExistentes[i]);
+                                let gazela = new Animal("GAZELA", 2, ["savana", "savana e rio"], "herbivoro");
+
+                                if(gazela.bioma.includes(recintosExistentes[i].bioma  )){
+                                    for(let j =0; j<=recintosExistentes[i].animaisExistentes.length -1; j++){
+                                        if(recintosExistentes[i].animaisExistentes[j].alimentacao === "carnivoro"){
+                                            isRecintoViavelGazela = false; 
+                                            break; 
+                                        }
+                                    }
+                                    if(isRecintoViavelGazela){
+                                        let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
+                                    let recintoFormatado = `Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`
+
+                                    recintosViaveis.push(recintoFormatado);
+
+                                    }   
+                                }
+                                break;
+
+                                case "HIPOPOTAMO":
+                                    let isRecintoViavelHipopotamo= true; 
+                                    if(espacoOcupado === null){
+                                    continue; 
+                                    }
+                                espacoOcupado = recintosExistentes[i].occupiedSpace("MACACO",quantidade,recintosExistentes[i]);
+                                let hipopotamo = new Animal("HIPOPOTAMO", 4, ["savana e rio"], "onivoro")
+
+                                if(hipopotamo.bioma.includes(recintosExistentes[i].bioma  )){
+                                    for(let j =0; j<=recintosExistentes[i].animaisExistentes.length -1; j++){
+                                        if(recintosExistentes[i].animaisExistentes[j].alimentacao === "carnivoro"){
+                                            isRecintoViavelHipopotamo = false; 
+                                            break; 
+                                        }
+                                    }
+                                    if(isRecintoViavelHipopotamo){
+                                        let espacoLivre = recintosExistentes[i].tamanhoTotal - espacoOcupado; 
+                                    let recintoFormatado = `Recinto ${recintosExistentes[i].numero} (espaço livre: ${espacoLivre} total: ${recintosExistentes[i].tamanhoTotal})`
+
+                                    recintosViaveis.push(recintoFormatado);
+
+                                    }                    
+                                }
+                                break;
                             }
                             
                         }
